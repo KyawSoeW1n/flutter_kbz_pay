@@ -18,8 +18,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    FlutterKbzPay.onPayStatus().listen((Object data) {
-      print('onPayStatus $data');
+    FlutterKbzPay.onPayStatus().listen((event) {
+      print('onPayStatus $event');
     });
   }
 
@@ -43,7 +43,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void instantStartPay({String buildInfo, String signKey, String signType}) {
+  void instantStartPay({
+    required String buildInfo,
+    required String signKey,
+    required String signType,
+  }) {
     FlutterKbzPay.instantStartPay(
       buildInfo: buildInfo,
       urlScheme: 'KbzPayExample',
@@ -87,8 +91,9 @@ class _MyAppState extends State<MyApp> {
                         borderSide: BorderSide(color: Colors.cyan),
                       ),
                     ),
-                    validator: (String value) => value == null ? '' : null,
-                    onSaved: (String value) => prepayId = value,
+                    validator: (String? value) => value == null ? '' : null,
+                    onSaved: (String? value) =>
+                        value != null ? prepayId = value : null,
                   ),
                   SizedBox(height: 15.0),
                   Padding(
@@ -109,8 +114,9 @@ class _MyAppState extends State<MyApp> {
                         borderSide: BorderSide(color: Colors.cyan),
                       ),
                     ),
-                    validator: (String value) => value == null ? '' : null,
-                    onSaved: (String value) => merchCode = value,
+                    validator: (String? value) => value == null ? '' : null,
+                    onSaved: (String? value) =>
+                        value == null ? null : merchCode = value,
                   ),
                   SizedBox(height: 15.0),
                   Padding(
@@ -131,8 +137,9 @@ class _MyAppState extends State<MyApp> {
                         borderSide: BorderSide(color: Colors.cyan),
                       ),
                     ),
-                    validator: (String value) => value == null ? '' : null,
-                    onSaved: (String value) => appId = value,
+                    validator: (String? value) => value == null ? '' : null,
+                    onSaved: (String? value) =>
+                        value == null ? null : appId = value,
                   ),
                   SizedBox(height: 15.0),
                   Padding(
@@ -153,8 +160,9 @@ class _MyAppState extends State<MyApp> {
                         borderSide: BorderSide(color: Colors.cyan),
                       ),
                     ),
-                    validator: (String value) => value == null ? '' : null,
-                    onSaved: (String value) => signKey = value,
+                    validator: (String? value) => value == null ? '' : null,
+                    onSaved: (String? value) =>
+                        value == null ? null : signKey = value,
                   ),
                   SizedBox(height: 15.0),
                   ElevatedButton(
