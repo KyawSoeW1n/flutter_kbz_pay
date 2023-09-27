@@ -54,6 +54,12 @@ FlutterKbzPay.onPayStatus().listen((String data) {
 });
 ```
 
+## For Development 
+Please use dev branch
+
+## For Production
+Please use main branch
+
 ## Getting Started
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.dev/docs), which offers tutorials, 
