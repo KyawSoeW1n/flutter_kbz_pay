@@ -7,7 +7,7 @@ A Flutter KBZPay Plugin.
 // github
 flutter_kbz_pay:
     git:
-      url: git://github.com/lostcixin/flutter_kbz_pay.git
+      url: https://github.com/KyawSoeW1n/flutter_kbz_pay.git
       ref: master
 ```
 ## Usage
