@@ -1,4 +1,4 @@
-# Flutter KBZPay 
+# Flutter KBZPay
 
 A Flutter KBZPay Plugin.
 
@@ -6,27 +6,65 @@ A Flutter KBZPay Plugin.
 ```yaml
 // github
 flutter_kbz_pay:
-    git:
-      url: https://github.com/KyawSoeW1n/flutter_kbz_pay.git
-      ref: master
+  git:
+    url: https://github.com/KyawSoeW1n/flutter_kbz_pay.git
+    ref: main
 ```
-## Usage
-### Android
-android/app/src/main/manifest.xml
+## Platform Configuration
+### 🧩 Android Setup
+Open android/app/src/main/manifest.xml
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 ....
-	<activity android:name="com.kbzbank.payment.sdk.callback.CallbackResultActivity" android:theme="@android:style/Theme.NoDisplay" android:exported="true"
+<activity
+    android:name="com.kbzbank.payment.sdk.callback.CallbackResultActivity"
+    android:theme="@android:style/Theme.NoDisplay"
+    android:exported="true" />
 ....
 ```
-### IOS
-App project configuration in the Info. Add kbzpay pist white list
-ios/Runner/Info.plist
+### 🍏 iOS Setup
+Edit your iOS app’s Info.plist
 ```plist
 <key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kbzpay</string>
-	</array>
+<array>
+    <string>kbzpay</string>
+</array>
+....
+```
+###  Start Payment
+You can start a KBZPay payment using either startPay or instantStartPay.
+For startPay, in your dart file,
+```dart
+FlutterKbzPay.startPay(
+  prepayId: prepayId,
+  merchCode: merchCode,
+  appId: appId,
+  urlScheme: 'KbzPayExample', // Only for iOS
+  signKey: signKey,
+).then((res) {
+  print('startPay: $res');
+});
+....
+```
+For instantStartPay, in your dart file,
+Server response with json format
+```json
+{
+        "buildInfo": "appid=xxxxxxx&merch_code=xxxxx&nonce_str=xxxxx&prepay_id=KBZxxxxx&timestamp=xxxxx",
+        "signKey": "xxxxxxxx"
+}
+```
+And use server response
+```dart
+FlutterKbzPay.instantStartPay(
+  buildInfo: buildInfo,
+  urlScheme: 'KbzPayExample', // Only for iOS
+  signType: 'SHA256', // Example
+  signKey: signKey,
+).then((res) {
+  print('instantStartPay: $res');
+});
+....
 ```
 
 ### Payment callback
@@ -34,33 +72,18 @@ Payment callback, payment completion or payment cancellation, currently there ar
 
 1：Pay for success，
 3：Payment failed, the remaining fields are reserved for later addition。
-
-## Example
+In your dart file,
 ```dart
-import 'package:flutter_kbz_pay/flutter_kbz_pay.dart';
-
-FlutterKbzPay.startPay(
-            prepayId: this.prepayId,
-            merchCode: this.merchCode,
-            appId: this.appId,
-            urlScheme: 'KbzPayExample', //Only Ios
-            signKey: this.signKey)
-        .then((res) {
-      print('startPay' + res.toString());
-});
-    
+...
 FlutterKbzPay.onPayStatus().listen((String data) {
       print('onPayStatus $data');
 });
+....
 ```
 
-## For Development 
+## For Development
 Please use dev branch
 
 ## For Production
 Please use main branch
 
-## Getting Started
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
